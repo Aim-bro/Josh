@@ -38,8 +38,8 @@ if td_tag:
 from datetime import datetime, timedelta
 # date = '20231122'
 article_titles = []  # 기사 제목을 저장할 리스트
-date_start = '20231120'
-date_end = '20231122'
+date_start = '20231101'
+date_end = '20231123'
 
 # 문자열 형식의 날짜를 datetime 형식으로 변환
 start_date = datetime.strptime(date_start, '%Y%m%d')
@@ -153,7 +153,6 @@ response = requests.get(url)
 
 # 응답 상태코드 확인
 if response.status_code == 200:
-    # 파일 저장
     with open('NanumSquareRoundR.ttf', 'wb') as file:
         file.write(response.content)
     print('파일 다운로드 및 저장 완료')
