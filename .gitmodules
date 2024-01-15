@@ -5,3 +5,6 @@
 [submodule "code_project2"]
 	path = code_project2
 	url = https://github.com/Aim-bro/code_project2.git
+[submodule "code_project"]
+	path = code_project
+	url = https://github.com/Aim-bro/code_project.git
