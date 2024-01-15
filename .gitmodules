@@ -1,0 +1,3 @@
+[submodule "the-sports-ticket"]
+	path = the-sports-ticket
+	url = https://github.com/Aim-bro/the-sports-ticket.git
