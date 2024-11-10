@@ -1,0 +1,1 @@
+{"name":"Local: 시험 성적","url":"c:\\Users\\Jo\\python\\BOJ\\9498번： 시험 성적\\시험 성적.py","tests":[{"id":1731206786605,"input":"100","output":"A"},{"id":1731207050706,"input":"89","output":"B"},{"id":1731207210042,"input":"79","output":"C"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\9498번： 시험 성적\\시험 성적.py","group":"local","local":true}

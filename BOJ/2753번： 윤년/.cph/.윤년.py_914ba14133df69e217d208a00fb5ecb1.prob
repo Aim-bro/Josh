@@ -1,0 +1,1 @@
+{"name":"Local: 윤년","url":"c:\\Users\\Jo\\python\\BOJ\\BOJ\\2753번： 윤년\\윤년.py","tests":[{"id":1731242583595,"input":"2000","output":"1"},{"id":1731242589471,"input":"1999","output":"0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\BOJ\\2753번： 윤년\\윤년.py","group":"local","local":true}

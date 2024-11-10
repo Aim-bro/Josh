@@ -1,0 +1,1 @@
+{"name":"Local: 사분면 고르기","url":"c:\\Users\\Jo\\python\\BOJ\\14681번： 사분면 고르기\\사분면 고르기.py","tests":[{"id":1731243104030,"input":"12\n5","output":"1"},{"id":1731243108112,"input":"9\n-13","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\14681번： 사분면 고르기\\사분면 고르기.py","group":"local","local":true}
