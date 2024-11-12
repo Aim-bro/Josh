@@ -1,0 +1,1 @@
+{"name":"Local: 빠른 A+B","url":"c:\\Users\\Jo\\python\\BOJ\\15552번： 빠른 A+B\\빠른 A+B.py","tests":[{"id":1731372178439,"input":"5\n1 1\n12 34\n5 500\n40 60\n1000 1000","output":"2\n46\n505\n100\n2000"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\15552번： 빠른 A+B\\빠른 A+B.py","group":"local","local":true}
