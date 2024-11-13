@@ -1,3 +1,4 @@
+# %%
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,6 +10,32 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.pipeline import Pipeline
 
+from collections import Counter
+from wordcloud import WordCloud
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import re
+from scipy import stats
+
+# nltk 데이터 다운로드
+import nltk
+
+# NLTK 데이터 다운로드 경로 설정 (선택사항)
+import os
+nltk.data.path.append(os.path.join(os.path.expanduser("~"), "nltk_data"))
+
+# 필요한 NLTK 데이터 다운로드
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+# %%
 # 시각화 스타일 설정
 sns.set_style("whitegrid")
 plt.rcParams['font.size'] = 12
@@ -179,6 +206,147 @@ class GameSalesAnalyzer:
         print(f"\nCross-validation scores: {cv_scores}")
         print(f"Average R2 score: {cv_scores.mean():.3f} (+/- {cv_scores.std() * 2:.3f})")
 
+    # 추가 분석
+    def analyze_game_titles(self):
+        """게임 제목 텍스트 분석"""
+        # 게임 제목에서 단어 추출
+        titles = ' '.join(self.df_cleaned['Name'])
+        # 특수문자 제거 및 소문자 변환
+        titles = re.sub(r'[^\w\s]', '', titles.lower())
+        
+        # 단어 토큰화
+        words = word_tokenize(titles)
+        # 불용어 제거
+        stop_words = set(stopwords.words('english'))
+        words = [word for word in words if word not in stop_words]
+        
+        # 단어 빈도 계산
+        word_freq = Counter(words)
+        
+        # 워드클라우드 생성
+        plt.figure(figsize=(12, 8))
+        wordcloud = WordCloud(width=1200, height=800, 
+                            background_color='white').generate_from_frequencies(word_freq)
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis('off')
+        plt.title('Most Common Words in Game Titles')
+        plt.show()
+        
+        # 상위 20개 단어 빈도 막대 그래프
+        plt.figure(figsize=(15, 6))
+        top_words = dict(sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:20])
+        sns.barplot(x=list(top_words.values()), y=list(top_words.keys()))
+        plt.title('Top 20 Most Common Words in Game Titles')
+        plt.xlabel('Frequency')
+        plt.tight_layout()
+        plt.show()
+
+    def analyze_publisher_success(self):
+        """퍼블리셔별 성공률 분석"""
+        # 퍼블리셔별 통계
+        publisher_stats = self.df_cleaned.groupby('Publisher').agg({
+            'Total_Sales': ['count', 'mean', 'sum'],
+            'Name': 'count'
+        }).reset_index()
+        
+        publisher_stats.columns = ['Publisher', 'Game_Count', 'Avg_Sales', 'Total_Sales']
+        
+        # 성공 기준 설정 (평균 판매량 기준)
+        mean_sales = self.df_cleaned['Total_Sales'].mean()
+        publisher_stats['Success_Rate'] = self.df_cleaned.groupby('Publisher').apply(
+            lambda x: (x['Total_Sales'] > mean_sales).mean()
+        ).values * 100
+        
+        # 상위 20개 퍼블리셔 시각화
+        top_publishers = publisher_stats.nlargest(20, 'Total_Sales')
+        
+        fig, axes = plt.subplots(2, 1, figsize=(15, 12))
+        
+        # 총 판매량
+        sns.barplot(data=top_publishers, x='Total_Sales', y='Publisher', ax=axes[0])
+        axes[0].set_title('Top 20 Publishers by Total Sales')
+        
+        # 성공률
+        sns.barplot(data=top_publishers, x='Success_Rate', y='Publisher', ax=axes[1])
+        axes[1].set_title('Success Rate of Top Publishers (%)')
+        
+        plt.tight_layout()
+        plt.show()
+
+    def analyze_regional_preferences(self):
+        """지역별 선호 장르 분석"""
+        regions = ['NA_Sales', 'EU_Sales', 'JP_Sales', 'Other_Sales']
+        
+        # 각 지역별 선호 장르 계산
+        regional_preferences = pd.DataFrame()
+        for region in regions:
+            top_genres = self.df_cleaned.groupby('Genre')[region].sum().sort_values(ascending=False)
+            regional_preferences[region.replace('_Sales', '')] = top_genres.index
+        
+        # 히트맵 데이터 준비
+        genre_region_sales = self.df_cleaned.groupby('Genre')[regions].sum()
+        genre_region_sales = genre_region_sales.div(genre_region_sales.sum())
+        
+        # 히트맵 시각화
+        plt.figure(figsize=(12, 8))
+        sns.heatmap(genre_region_sales, annot=True, fmt='.2%', cmap='YlOrRd')
+        plt.title('Regional Genre Preferences (% of Total Sales)')
+        plt.tight_layout()
+        plt.show()
+
+    def analyze_release_trends(self):
+        """연도별 게임 출시 수와 판매량 분석"""
+        yearly_stats = self.df_cleaned.groupby('Year').agg({
+            'Name': 'count',
+            'Total_Sales': 'mean'
+        }).reset_index()
+        yearly_stats.columns = ['Year', 'Game_Count', 'Avg_Sales']
+        
+        # 상관관계 계산
+        correlation = stats.pearsonr(yearly_stats['Game_Count'], yearly_stats['Avg_Sales'])
+        
+        # 시각화
+        fig, ax1 = plt.subplots(figsize=(15, 8))
+        
+        # 게임 출시 수
+        ax1.set_xlabel('Year')
+        ax1.set_ylabel('Number of Games Released', color='tab:blue')
+        line1 = ax1.plot(yearly_stats['Year'], yearly_stats['Game_Count'], 
+                        color='tab:blue', label='Games Released')
+        ax1.tick_params(axis='y', labelcolor='tab:blue')
+        
+        # 평균 판매량
+        ax2 = ax1.twinx()
+        ax2.set_ylabel('Average Sales', color='tab:orange')
+        line2 = ax2.plot(yearly_stats['Year'], yearly_stats['Avg_Sales'], 
+                        color='tab:orange', label='Average Sales')
+        ax2.tick_params(axis='y', labelcolor='tab:orange')
+        
+        # 범례 통합
+        lines = line1 + line2
+        labels = [l.get_label() for l in lines]
+        ax1.legend(lines, labels, loc='upper left')
+        
+        plt.title(f'Game Releases vs Average Sales (Correlation: {correlation[0]:.2f})')
+        plt.tight_layout()
+        plt.show()
+
+    def analyze_seasonal_trends(self):
+        """계절별 트렌드 분석"""
+        # 월별 데이터가 없으므로 분기별로 분석
+        self.df_cleaned['Quarter'] = pd.qcut(self.df_cleaned['Year_Group'], 
+                                           q=4, labels=['Q1', 'Q2', 'Q3', 'Q4'])
+        
+        quarterly_sales = self.df_cleaned.groupby(['Quarter', 'Genre'])['Total_Sales'].mean().reset_index()
+        
+        plt.figure(figsize=(15, 8))
+        sns.barplot(data=quarterly_sales, x='Quarter', y='Total_Sales', hue='Genre')
+        plt.title('Average Sales by Quarter and Genre')
+        plt.xticks(rotation=45)
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
+        plt.show()
+# %%
 # 메인 실행 코드
 if __name__ == "__main__":
     # 분석기 초기화
@@ -192,5 +360,15 @@ if __name__ == "__main__":
     analyzer.analyze_regional_sales()
     analyzer.analyze_platform_lifecycle()
     
+    
+
+    #추가 분석
+    analyzer.analyze_game_titles()
+    analyzer.analyze_publisher_success()
+    analyzer.analyze_regional_preferences()
+    analyzer.analyze_release_trends()
+    analyzer.analyze_seasonal_trends()
+
     # 머신러닝 모델 학습
     analyzer.train_ml_model()
+# %%
