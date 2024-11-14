@@ -1,0 +1,1 @@
+{"name":"Local: 최소, 최대","url":"c:\\Users\\Jo\\python\\BOJ\\10818번： 최소, 최대\\최소, 최대.py","tests":[{"id":1731557292788,"input":"5\n20 10 35 30 7","output":"7 35"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\10818번： 최소, 최대\\최소, 최대.py","group":"local","local":true}

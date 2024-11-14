@@ -1,0 +1,1 @@
+{"name":"Local: 공 넣기","url":"c:\\Users\\Jo\\python\\BOJ\\10810번： 공 넣기\\공 넣기.py","tests":[{"id":1731559303263,"input":"5 4\n1 2 3\n3 4 4\n1 4 1\n2 2 2","output":"1 2 1 1 0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\10810번： 공 넣기\\공 넣기.py","group":"local","local":true}

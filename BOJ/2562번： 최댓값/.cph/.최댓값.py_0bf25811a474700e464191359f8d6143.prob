@@ -1,0 +1,1 @@
+{"name":"Local: 최댓값","url":"c:\\Users\\Jo\\python\\BOJ\\2562번： 최댓값\\최댓값.py","tests":[{"id":1731557739707,"input":"3\n29\n38\n12\n57\n74\n40\n85\n61","output":"85\n8"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\2562번： 최댓값\\최댓값.py","group":"local","local":true}
