@@ -1,0 +1,1 @@
+{"name":"Local: 바구니 뒤집기","url":"c:\\Users\\Jo\\python\\BOJ\\10811번： 바구니 뒤집기\\바구니 뒤집기.py","tests":[{"id":1731629633056,"input":"5 4\n1 2\n3 4\n1 4\n2 2","output":"3 4 1 2 5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\10811번： 바구니 뒤집기\\바구니 뒤집기.py","group":"local","local":true}
