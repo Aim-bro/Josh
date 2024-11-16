@@ -1,0 +1,1 @@
+{"name":"Local: 숫자의 합","url":"c:\\Users\\Jo\\python\\BOJ\\11720번： 숫자의 합\\숫자의 합.py","tests":[{"id":1731718558483,"input":"1\n1","output":"1"},{"id":1731718631495,"input":"5\n54321","output":"15"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\11720번： 숫자의 합\\숫자의 합.py","group":"local","local":true}
