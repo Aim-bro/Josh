@@ -1,17 +1,30 @@
 #  **************************************************************************  #
 #                                                                              #
 #                                                       :::    :::    :::      #
-#    Problem Number: 10811                             :+:    :+:      :+:     #
+#    Problem Number: 2941                              :+:    :+:      :+:     #
 #                                                     +:+    +:+        +:+    #
 #    By: jjh970323 <boj.kr/u/jjh970323>              +#+    +#+          +#+   #
 #                                                   +#+      +#+        +#+    #
-#    https://boj.kr/10811                          #+#        #+#      #+#     #
-#    Solved: 2024/11/15 09:08:42 by jjh970323     ###          ###   ##.kr     #
+#    https://boj.kr/2941                           #+#        #+#      #+#     #
+#    Solved: 2024/11/19 09:23:06 by jjh970323     ###          ###   ##.kr     #
 #                                                                              #
 #  **************************************************************************  #
-N, M = map(int, input().split())
-arr = [x+1 for x in range(N)]
-for x in range(M):
-    i, j = map(int, input().split())
-    arr = arr[:i-1] + arr[i-1:j][::-1] + arr[j:]
-print(' '.join([str(x) for x in arr]))
+arr = ["c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="]
+
+sen = input()
+tot = 0
+i = 0
+while i < len(sen):
+    match = False
+    for word in arr:
+        if sen[i:i+len(word)] == word:
+            tot += 1
+            i += len(word)
+            match = True
+            break
+    if not match:
+        tot += 1
+        i += 1
+
+print(tot)
+    

@@ -16,6 +16,5 @@ for x in range(30):
         arr.remove(num)
     except EOFError:
         break
-
 for x in arr:
     print(x)

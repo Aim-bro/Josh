@@ -9,7 +9,6 @@
 #    Solved: 2024/11/17 08:52:29 by jjh970323     ###          ###   ##.kr     #
 #                                                                              #
 #  **************************************************************************  #
-# A, B = map(int, input().split())
-# A,B = input().split()
+
 arr = [int(x[::-1]) for x in input().split()]
 print(max(arr))

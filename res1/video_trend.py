@@ -242,14 +242,14 @@ class GameSalesAnalyzer:
         plt.show()
 
     def analyze_publisher_success(self):
+
         """퍼블리셔별 성공률 분석"""
         # 퍼블리셔별 통계
-        publisher_stats = self.df_cleaned.groupby('Publisher').agg({
-            'Total_Sales': ['count', 'mean', 'sum'],
-            'Name': 'count'
-        }).reset_index()
-        
-        publisher_stats.columns = ['Publisher', 'Game_Count', 'Avg_Sales', 'Total_Sales']
+        publisher_stats = self.df_cleaned.groupby('Publisher').agg(
+            Game_Count=('Total_Sales', 'count'),
+            Avg_Sales=('Total_Sales', 'mean'),
+            Total_Sales=('Total_Sales', 'sum')
+        ).reset_index()
         
         # 성공 기준 설정 (평균 판매량 기준)
         mean_sales = self.df_cleaned['Total_Sales'].mean()
@@ -333,15 +333,21 @@ class GameSalesAnalyzer:
 
     def analyze_seasonal_trends(self):
         """계절별 트렌드 분석"""
-        # 월별 데이터가 없으므로 분기별로 분석
-        self.df_cleaned['Quarter'] = pd.qcut(self.df_cleaned['Year_Group'], 
-                                           q=4, labels=['Q1', 'Q2', 'Q3', 'Q4'])
+        # 2010년까지만 데이터 필터링
+        filtered_df = self.df_cleaned[self.df_cleaned['Year_Group'] <= 2010]
         
-        quarterly_sales = self.df_cleaned.groupby(['Quarter', 'Genre'])['Total_Sales'].mean().reset_index()
+        # 수동 구간 설정 (1980-2010)
+        bins = [1980, 1990, 2000, 2010]
+        labels = ['Q1', 'Q2', 'Q3']
         
+        filtered_df['Quarter'] = pd.cut(filtered_df['Year_Group'], bins=bins, labels=labels, include_lowest=True)
+        
+        quarterly_sales = filtered_df.groupby(['Quarter', 'Genre'])['Total_Sales'].mean().reset_index()
+        
+        # 시각화
         plt.figure(figsize=(15, 8))
         sns.barplot(data=quarterly_sales, x='Quarter', y='Total_Sales', hue='Genre')
-        plt.title('Average Sales by Quarter and Genre')
+        plt.title('Average Sales by Quarter and Genre (Up to 2010)')
         plt.xticks(rotation=45)
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
         plt.tight_layout()

@@ -11,7 +11,7 @@
 #  **************************************************************************  #
 N, M = map(int, input().split())
 arr = [0]*N
-for x in range(4):
+for x in range(M):
     i, j, k = map(int, input().split())
     for x in range(i,j+1):
         arr[x-1] = k            

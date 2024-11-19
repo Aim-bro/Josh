@@ -1,17 +1,21 @@
 #  **************************************************************************  #
 #                                                                              #
 #                                                       :::    :::    :::      #
-#    Problem Number: 10811                             :+:    :+:      :+:     #
+#    Problem Number: 25206                             :+:    :+:      :+:     #
 #                                                     +:+    +:+        +:+    #
 #    By: jjh970323 <boj.kr/u/jjh970323>              +#+    +#+          +#+   #
 #                                                   +#+      +#+        +#+    #
-#    https://boj.kr/10811                          #+#        #+#      #+#     #
-#    Solved: 2024/11/15 09:08:42 by jjh970323     ###          ###   ##.kr     #
+#    https://boj.kr/25206                          #+#        #+#      #+#     #
+#    Solved: 2024/11/19 11:40:11 by jjh970323     ###          ###   ##.kr     #
 #                                                                              #
 #  **************************************************************************  #
-N, M = map(int, input().split())
-arr = [x+1 for x in range(N)]
-for x in range(M):
-    i, j = map(int, input().split())
-    arr = arr[:i-1] + arr[i-1:j][::-1] + arr[j:]
-print(' '.join([str(x) for x in arr]))
+dict = {"A+":4.5, "A0":4, "B+":3.5, "B0":3, "C+":2.5, "C0":2, "D+":1.5, "D0":1, "F":0}
+tot = 0
+hak = 0
+for _ in range(20):
+    x, y, z = input().split()
+    if z !="P":
+        tot += float(y)*dict[z]
+        hak += float(y)
+        
+print(tot/hak)
