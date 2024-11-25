@@ -1,0 +1,1 @@
+{"name":"Local: 행렬 덧셈","url":"c:\\Users\\Jo\\python\\BOJ\\2738번： 행렬 덧셈\\행렬 덧셈.py","tests":[{"id":1732062563240,"input":"3 3\n1 1 1\n2 2 2\n0 1 0\n3 3 3\n4 4 4\n5 5 100","output":"4 4 4\n6 6 6\n5 6 100"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\2738번： 행렬 덧셈\\행렬 덧셈.py","group":"local","local":true}

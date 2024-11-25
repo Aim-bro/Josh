@@ -30,7 +30,7 @@ try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
     nltk.download('punkt')
-
+    
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
@@ -352,6 +352,36 @@ class GameSalesAnalyzer:
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
         plt.tight_layout()
         plt.show()
+        
+    def analyze_genre_platform_relationship(self):
+        """
+        장르와 플랫폼의 교차 관계 분석: 특정 플랫폼에서 어떤 장르가 주로 팔리는지 분석
+        """
+        # 플랫폼과 장르별 총 판매량 계산
+        platform_genre_sales = self.df_cleaned.groupby(['Platform', 'Genre'])['Total_Sales'].sum().reset_index()
+        
+        # 플랫폼별 장르 판매량 비율 계산 (인덱스를 리셋하여 오류 방지)
+        platform_genre_sales['Sales_Percentage'] = platform_genre_sales.groupby('Platform')['Total_Sales'].transform(
+            lambda x: x / x.sum() * 100
+        )
+
+        # 상위 10개 플랫폼 선택 (총 판매량 기준)
+        top_platforms = self.df_cleaned.groupby('Platform')['Total_Sales'].sum().nlargest(10).index
+        filtered_sales = platform_genre_sales[platform_genre_sales['Platform'].isin(top_platforms)]
+
+        # 히트맵 데이터 준비
+        pivot_data = filtered_sales.pivot(index='Genre', columns='Platform', values='Sales_Percentage').fillna(0)
+        
+        # 시각화
+        plt.figure(figsize=(15, 8))
+        sns.heatmap(pivot_data, annot=True, fmt=".1f", cmap='Blues', cbar_kws={'label': 'Sales Percentage (%)'})
+        plt.title('Genre Sales Distribution Across Top Platforms')
+        plt.xlabel('Platform')
+        plt.ylabel('Genre')
+        plt.tight_layout()
+        plt.show()
+
+
 # %%
 # 메인 실행 코드
 if __name__ == "__main__":
@@ -366,15 +396,16 @@ if __name__ == "__main__":
     analyzer.analyze_regional_sales()
     analyzer.analyze_platform_lifecycle()
     
-    
-
     #추가 분석
     analyzer.analyze_game_titles()
     analyzer.analyze_publisher_success()
     analyzer.analyze_regional_preferences()
     analyzer.analyze_release_trends()
     analyzer.analyze_seasonal_trends()
-
+    analyzer.analyze_genre_platform_relationship()
+    
     # 머신러닝 모델 학습
     analyzer.train_ml_model()
+    
+
 # %%
