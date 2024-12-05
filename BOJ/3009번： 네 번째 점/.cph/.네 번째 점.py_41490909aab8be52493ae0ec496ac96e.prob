@@ -1,0 +1,1 @@
+{"name":"Local: 네 번째 점","url":"c:\\Users\\Jo\\python\\BOJ\\3009번： 네 번째 점\\네 번째 점.py","tests":[{"id":1733400783486,"input":"5 5\n5 7\n7 5","output":"7 7"},{"id":1733400897934,"input":"30 20\n10 10\n10 20","output":"30 10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\3009번： 네 번째 점\\네 번째 점.py","group":"local","local":true}
