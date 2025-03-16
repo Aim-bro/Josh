@@ -1,0 +1,1 @@
+{"name":"Local: 대지","url":"c:\\Users\\Jo\\python\\BOJ\\9063번： 대지\\대지.py","tests":[{"id":1733725441541,"input":"3\n20 24\n40 21\n10 12","output":"360"},{"id":1733725447469,"input":"1\n15 13","output":"0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\9063번： 대지\\대지.py","group":"local","local":true}

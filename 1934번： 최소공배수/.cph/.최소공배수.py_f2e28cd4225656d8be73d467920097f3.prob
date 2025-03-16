@@ -1,0 +1,1 @@
+{"name":"Local: 최소공배수","url":"c:\\Users\\Jo\\python\\BOJ\\1934번： 최소공배수\\최소공배수.py","tests":[{"id":1739161869111,"input":"3\n1 45000\n6 10\n13 17","output":"45000\n30\n221"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Jo\\python\\BOJ\\1934번： 최소공배수\\최소공배수.py","group":"local","local":true}
