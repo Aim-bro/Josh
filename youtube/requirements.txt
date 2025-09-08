@@ -1,0 +1,7 @@
+google-api-python-client>=2.137.0
+google-auth>=2.30.0
+pandas>=2.2.2
+python-dotenv>=1.0.1
+tqdm>=4.66.4
+tenacity>=8.3.0
+pyarrow>=16.1.0
